@@ -21,7 +21,7 @@ export class AppComponent {
       };
       initializeApp(config);
       
-      var root = database().ref();
+      var root = database().ref('testArray');
       root.on('value',function(snap) {
         console.log(snap.val());
       });
