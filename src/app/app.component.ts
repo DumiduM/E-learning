@@ -1,5 +1,7 @@
+import { subscribeTo } from 'rxjs/internal-compatibility';
+import { AngularFireDatabase } from 'angularfire2/database';
 import { Component } from '@angular/core';
-import { initializeApp, database} from 'firebase';
+import { FirebaseListObservable, FirebaseObjectObservable } from 'angularfire2/database';
 
 @Component({
   selector: 'app-root',
@@ -9,21 +11,30 @@ import { initializeApp, database} from 'firebase';
 export class AppComponent {
   title = 'final-project';
 
-  constructor() {
-      // Initialize Firebase
-      var config = {
-        apiKey: "AIzaSyDHTdmX0aWNJwuISWyGmt32Cxsu10HFZuA",
-        authDomain: "final-project-recording-7e32c.firebaseapp.com",
-        databaseURL: "https://final-project-recording-7e32c.firebaseio.com",
-        projectId: "final-project-recording-7e32c",
-        storageBucket: "final-project-recording-7e32c.appspot.com",
-        messagingSenderId: "122855990924"
-      };
-      initializeApp(config);
-      
-      var root = database().ref('testArray');
-      root.on('value',function(snap) {
-        console.log(snap.val());
-      });
+  courses$:FirebaseListObservable<any>;
+  lesson$:FirebaseObjectObservable<any>;3
+
+  firstCourse:any;
+
+  constructor(private af: AngularFireDatabase) {
+
+    this.courses$ = af.list('courses');
+    this.courses$.subscribe(console.log);
+    this.lesson$ = af.object('courses');
+    this.lesson$.subscribe(console.log);
+
+    this.firstCourse = this.courses$[0];
+  }
+
+  listPush() {
+    this.courses$.push({description: 'TEST NEW COURSE'})
+    .then(
+      () => console.log('List Push Done'),
+      console.error
+    )
+  }
+
+  listRemove() {
+    this.courses$.remove(this.firstCourse);
   }
 }

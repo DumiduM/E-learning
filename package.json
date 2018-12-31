@@ -25,7 +25,7 @@
     "@angular/router": "6.0.0",
     "@types/lodash": "^4.14.36",
     "@types/request": "0.0.30",
-    "angularfire2": "^4.0.0-rc.0",
+    "angularfire2": "^4.0.0-rc0",
     "core-js": "^2.4.1",
     "firebase": "^3.7.4",
     "firebase-queue": "^1.5.0",
